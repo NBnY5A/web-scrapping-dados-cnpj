@@ -16,7 +16,7 @@ Se aparecer uma mensagem mostrando a versão do python, prossiga, caso contrári
 
 # Configurando o ambiente
 
-Clone o projeto `git clone `, abra a pasta do projeto clonado.
+Clone o projeto `git clone https://github.com/NBnY5A/web-scrapping-dados-cnpj.git`, abra a pasta do projeto clonado.
 
 Após ter verificado que você possui o Python instalado, é **fortemente recomendado** que você crie um ambiente virtual Python para que você isole as dependências do projeto e não haja conflito com as bibliotecas instaladas na sua máquina.
 
