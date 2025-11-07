@@ -2,7 +2,7 @@ import requests
 import os
 import re
 from downloader import download_files
-from file_utils import extract_zip, purge_zip_files, rename_files_to_csv
+from app.utils.file_utils import extract_zip, purge_zip_files, rename_files_to_csv
 from parser import get_files_from_folder, get_folders
 
 
