@@ -67,3 +67,51 @@ source venv/bin/activate
 ```bash
 pip install -r requirements.txt
 ```
+
+# Executando o Projeto
+
+Após ter instalado as dependências do projeto, execute o arquivo `main.py`, ele irá baixar e criar uma pasta contendo os arquivos do **Dados Abertos Cnpj** no formato CSV.
+
+Aguarde até que todos os arquivos tenham sido baixados. Após isso, inicie uma instância do Postgres seja local ou via Docker e faca o seguinte:
+
+1. Copie o arquivo .env.example e renomeie para .env:
+
+```bash
+cp .env.example .env
+```
+
+2. Defina os parâmetros no arquivo `.env`:
+
+```bash
+POSTGRES_DB=nome_do_banco
+POSTGRES_USER=seu_usuario_do_banco
+POSTGRES_PASSWORD=sua_senha
+DATABASE_URL=a_string_de_conexao_com_o_banco #postgresql+psycopg2://seu_usuario_do_banco:sua_senha@instancia_do_banco:porta/nome_do_banco
+```
+
+Obs: Para executar o banco de dados via docker, na pasta raiz do projeto, onde possui o arquivo `docker-compose.yml`, no terminal digite o comando:
+```bash
+docker compose up -d
+```
+
+Ele irá automaticamente baixar uma imagem do Postgres caso não tenha e irá subir o banco de dados.
+
+3. Após definir os parâmetros e verificar que você possui o banco ativo. Execute o arquivo **`create_db.py`**. Esse arquivo criará as entidades dentro do seu banco de dados.
+
+# Estrutura do Projeto (Incompleta)
+
+```bash
+.
+├── database # Diretório referente ao banco de dados
+│   ├── create_db.py  # Código responsável pela criacão das entidades no banco
+│   ├── db_operations.py  # Responsável pelas operacões do banco
+│   └── models.py  # Representacão das entidades em modelos Python
+├── main.py  # Arquivo de inicializacão principal
+├── scraper # Diretório responsável pela extracão de dados do site
+│   ├── downloader.py  # Arquivo onde se a funcão para baixar os dados
+│   └── parser.py # Arquivo onde tem a funcão para definir os padrões dos dados a serem baixados
+├── transformer # Diretório responsável pela extracão dos arquivos zips e transformá-los em modelos Python
+│   └── extract_info_csv.py
+└── utils # Diretório com funcões úteis
+    └── file_utils.py
+```
