@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 import traceback
 import os
 from dotenv import load_dotenv
-from models import Base, Empresas, Cnae, Estabelecimentos, Socios, Pais
+from models import Base
 
 load_dotenv()
 
@@ -15,7 +15,7 @@ def create_database_schema():
     try:
         engine = create_engine(
             url=DATABASE_URL,
-            echo=False
+            echo=True
         )
 
         print("✅ Conexão realizada com sucesso!")
