@@ -1,9 +1,9 @@
 import requests
 import os
 import re
-from downloader import download_files
-from file_utils import extract_zip, purge_zip_files, rename_files_to_csv
-from parser import get_files_from_folder, get_folders
+from scraper.downloader import download_files
+from utils.file_utils import extract_zip, purge_zip_files
+from scraper.parser import get_files_from_folder, get_folders
 
 
 BASE_URL = "https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/"
@@ -26,23 +26,24 @@ def main():
         re.compile(r"^Cnaes.*\.zip$"),
         re.compile(r"^Empresas.*\.zip$"),
         # re.compile(r"^Estabelecimentos.*\.zip$"),
-        # re.compile(r"^Socios.*\.zip$")
+        # re.compile(r"^Socios.*\.zip$"),
+        # re.compile(r"^Pais.*\.zip$")
     ]
     
     files = get_files_from_folder(resp.text, patterns)
     print(f"Arquivos encontrados: {files}")
-    
+
+    new_dest_dir = os.path.join(DEST_DIR, last_folder)
+
     for file in files:
         file_url = BASE_URL + last_folder + file
-        file_path = os.path.join(DEST_DIR, file)
+        file_path = os.path.join(new_dest_dir, file)
         download_files(file_url, file_path)
 
         if file.endswith(".zip"):
-            extract_zip(file_path, DEST_DIR)
+            extract_zip(file_path, new_dest_dir)
 
-    purge_zip_files(DEST_DIR)
-
-    rename_files_to_csv(DEST_DIR)
+    purge_zip_files(new_dest_dir)
     
 
 if __name__ == "__main__":
