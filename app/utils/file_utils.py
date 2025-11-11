@@ -6,16 +6,35 @@ import re
 def extract_zip(file_path, dest_dir):
     print(f"Extraindo {file_path}...")
 
+    file_name = os.path.splitext(os.path.basename(file_path))[0]
+
+    csv_file_name = f"{file_name}.csv"
+
+    csv_file_path = os.path.join(dest_dir, csv_file_name)
+
     try:
         with zipfile.ZipFile(file_path, 'r') as zip_ref:
             zip_ref.testzip()
             print(f"{file_path} é um arquivo ZIP válido. Extraindo...")
 
+            internal_zip_file_name = zip_ref.namelist()[0]  # Se o arquivo Zip tiver mais de 1 arquivo, extrai o primeiro
+
+            zip_file_path = os.path.join(dest_dir, internal_zip_file_name)
+
             zip_ref.extractall(dest_dir)
-            print(f"Arquivo extraído para {dest_dir}")
+
+            if os.path.exists(zip_file_path):
+                os.rename(zip_file_path, csv_file_path)
+                print(f"Arquivo extraído e renomeado para -> \"{csv_file_path}\"")
+            else:
+                print(f"Erro: Arquivo extraído não encontrado em {zip_file_path}")
     
+    except IndexError:
+        print(f"Erro: O arquivo ZIP {file_path} está vazio.")
+
     except zipfile.BadZipFile:
         print(f"Erro: {file_path} não é um arquivo ZIP válido.")
+
     except Exception as e:
         print(f"Erro desconhecido ao tentar abrir o arquivo ZIP {file_path}: {e}")
 
@@ -30,22 +49,3 @@ def purge_zip_files(path: str):
             print(f"Arquivo excluído: {file_path}")
     
     print("Arquivos \".zip\" excluídos com sucesso.")
-
-
-# TODO: Essa função ainda não está 100% funcional, corrigir depois.
-def rename_files_to_csv(path: str):
-    pattern = re.compile(r"^(.*)CSV$")
-
-    for file in os.listdir(path):
-        if file.endswith("CSV"):
-            match = pattern.match(file)
-            print(match)
-            if match:
-                new_name = match.group(1) + ".csv"
-
-                old_file_path = os.path.join(path, file)
-                new_file_path = os.path.join(path, new_name)
-
-                os.rename(old_file_path, new_file_path)
-                print(f"Arquivo \"{file}\" renomeado com sucesso para -> \"{new_name}\"")
-    
