@@ -81,7 +81,7 @@ def load_paises(file_path, engine):
 
         except Exception as e:
             session.rollback()
-            print(f"❌ Falha ao salvar dados de Empresas no banco de dados do arquivo {file_path}. Detalhes: {e}")
+            print(f"❌ Falha ao salvar dados de Paises no banco de dados do arquivo {file_path}. Detalhes: {e}")
             traceback.print_exc()
             print("Abortando...")
 
@@ -111,7 +111,7 @@ def load_cnaes(file_path, engine):
 
         except Exception as e:
             session.rollback()
-            print(f"❌ Falha ao salvar dados de Empresas no banco de dados do arquivo {file_path}. Detalhes: {e}")
+            print(f"❌ Falha ao salvar dados de Cnaes no banco de dados do arquivo {file_path}. Detalhes: {e}")
             traceback.print_exc()
             print("Abortando...")
 
