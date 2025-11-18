@@ -48,7 +48,7 @@ pip install -r requirements.txt
 Após isso será possível testar o projeto sem problemas.
 
 
-## Para Linux:
+## Para Linux/Mac:
 1. Na pasta raiz do projeto clonado, abra um terminal e digite o seguinte comando:
 ```bash
 python3 -m venv venv
@@ -70,7 +70,7 @@ pip install -r requirements.txt
 
 # Executando o Projeto
 
-Após ter instalado as dependências do projeto, execute o arquivo `main.py`, ele irá baixar e criar uma pasta contendo os arquivos do **Dados Abertos Cnpj** no formato CSV.
+Após ter instalado as dependências do projeto, execute o arquivo **`main.py`**, ele irá baixar e criar uma pasta contendo os arquivos do **Dados Abertos Cnpj** no formato CSV.
 
 Aguarde até que todos os arquivos tenham sido baixados. Após isso, inicie uma instância do Postgres seja local ou via Docker e faca o seguinte:
 
@@ -89,7 +89,7 @@ POSTGRES_PASSWORD=sua_senha
 DATABASE_URL=a_string_de_conexao_com_o_banco #postgresql+psycopg2://seu_usuario_do_banco:sua_senha@instancia_do_banco:porta/nome_do_banco
 ```
 
-Obs: Para executar o banco de dados via docker, na pasta raiz do projeto, onde possui o arquivo `docker-compose.yml`, no terminal digite o comando:
+Obs: Para executar o banco de dados via docker, na pasta raiz do projeto, onde possui o arquivo **`docker-compose.yml`**, no terminal digite o comando:
 ```bash
 docker compose up -d
 ```
@@ -98,20 +98,24 @@ Ele irá automaticamente baixar uma imagem do Postgres caso não tenha e irá su
 
 3. Após definir os parâmetros e verificar que você possui o banco ativo. Execute o arquivo **`create_db.py`**. Esse arquivo criará as entidades dentro do seu banco de dados.
 
-# Estrutura do Projeto (Incompleta)
+4. Após a criacão das entidades no banco de dados, você precisará extrair os dados contidos nos CSV's e colocá-los dentro do seu banco.
+Para isso, basta executar o arquivo **`load_data.py`**. Esse arquivo contém as funcões responsáveis para lidar com os CSV's e transformá-los em dados estruturados contidos no **`models.py`**.
+
+
+# Estrutura do Projeto - Backend (Completa)
 
 ```bash
 .
-├── database # Diretório referente ao banco de dados
+├── database  # Diretório referente ao banco de dados
 │   ├── create_db.py  # Código responsável pela criacão das entidades no banco
-│   ├── db_operations.py  # Responsável pelas operacões do banco
+│   ├── load_data.py  # Funcões que convertem o CSV em dados do models.py e insere-os dentro do banco
 │   └── models.py  # Representacão das entidades em modelos Python
 ├── main.py  # Arquivo de inicializacão principal
-├── scraper # Diretório responsável pela extracão de dados do site
-│   ├── downloader.py  # Arquivo onde se a funcão para baixar os dados
-│   └── parser.py # Arquivo onde tem a funcão para definir os padrões dos dados a serem baixados
-├── transformer # Diretório responsável pela extracão dos arquivos zips e transformá-los em modelos Python
-│   └── extract_info_csv.py
-└── utils # Diretório com funcões úteis
-    └── file_utils.py
+├── scraper  # Diretório responsável pela extracão de dados do site
+│   ├── downloader.py  # Arquivo onde contém a funcão para baixar os dados
+│   └── parser.py  # Arquivo onde tem a funcão para definir os padrões dos dados a serem baixados
+├── transformer  # Diretório responsável pela extracão dos arquivos CSV's
+│   └── extract_info_csv.py  # Contém a funcão que usará uma estratégia de particionamento dos CSV's (chunks) para a extracão dos dados
+└── utils  # Diretório com funcões úteis
+    └── file_utils.py  # Contém algumas funcões úteis para lidar com arquivos
 ```

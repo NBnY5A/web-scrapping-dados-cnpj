@@ -1,6 +1,6 @@
 import zipfile
 import os
-import re
+from typing import List
 
 
 def extract_zip(file_path, dest_dir):
@@ -49,3 +49,12 @@ def purge_zip_files(path: str):
             print(f"Arquivo excluído: {file_path}")
     
     print("Arquivos \".zip\" excluídos com sucesso.")
+
+
+def get_all_files(path: str = "dados_cnpj/2025-11") -> List[str]:
+    try:
+        return (os.listdir(path))
+    except Exception as e:
+        print("Houve um erro ao retornar arquivos desse caminho!")
+        print("Verifique se o diretório existe ou se o caminho passado está correto")
+        print("Erro: ", e)
