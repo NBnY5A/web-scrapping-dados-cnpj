@@ -35,7 +35,6 @@ def get_engine() -> Engine | None:
 def create_database_schema(engine: Engine):
     """Cria o esquema do banco de dados (todas as tabelas) se não existirem."""
 
-    print("Criando tabelas...")
     try:
         print("Criando tabelas...")
 
