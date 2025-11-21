@@ -14,7 +14,7 @@ DEST_DIR = "dados_cnpj"
 def main():
     response = requests.get(BASE_URL)
     folders = get_folders(response.text)
-    
+
     last_folder = sorted(folders)[-1] # Para fins de exemplo, peguei a pasta mais recente
     
     print(f"Última pasta encontrada: {last_folder}")
