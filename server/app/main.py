@@ -4,26 +4,6 @@ import re
 from scraper.downloader import download_files
 from utils.file_utils import extract_zip, purge_zip_files
 from scraper.parser import get_files_from_folder, get_folders
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
-
-from app.api import empresas
-
-app = FastAPI()
-
-app.include_router(empresas.router)
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], 
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-@app.get("/")
-def root():
-    return {"message": "API funcionando!"}
 
 
 BASE_URL = "https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/"
@@ -34,7 +14,7 @@ DEST_DIR = "dados_cnpj"
 def main():
     response = requests.get(BASE_URL)
     folders = get_folders(response.text)
-    
+
     last_folder = sorted(folders)[-1] # Para fins de exemplo, peguei a pasta mais recente
     
     print(f"Última pasta encontrada: {last_folder}")
