@@ -106,6 +106,8 @@ Para isso, basta executar o arquivo **`load_data.py`**. Esse arquivo contém as 
 
 ```bash
 .
+├── api # Diretório responsável pela API do backend
+│   └── routes.py  # Arquivo onde serão definidas as rotas de acesso para o frontend
 ├── database  # Diretório referente ao banco de dados
 │   ├── create_db.py  # Código responsável pela criacão das entidades no banco
 │   ├── load_data.py  # Funcões que convertem o CSV em dados do models.py e insere-os dentro do banco
@@ -119,3 +121,9 @@ Para isso, basta executar o arquivo **`load_data.py`**. Esse arquivo contém as 
 └── utils  # Diretório com funcões úteis
     └── file_utils.py  # Contém algumas funcões úteis para lidar com arquivos
 ```
+
+# Fluxo do backend
+
+Para uso correto da aplicacão é necessário executar os arquivos na seguinte ordem: 
+
+**`main.py`** (Baixa os zip e converte para csv) **->** **`create_db.py`** (Cria o banco de dados no Postgre) **->** **`load_data.py`** (Carrega as informacões contidas no CSV para o banco de dados) **->** **`routes.py`** (Instância a API e suas rotas para o frontend)
