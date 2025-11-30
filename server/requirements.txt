@@ -17,3 +17,8 @@ SQLAlchemy==2.0.44
 typing_extensions==4.15.0
 tzdata==2025.2
 urllib3==2.5.0
+
+# API Framework
+fastapi==0.115.0
+uvicorn[standard]==0.32.1
+pydantic==2.10.5

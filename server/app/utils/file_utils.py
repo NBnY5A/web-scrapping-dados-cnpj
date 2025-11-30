@@ -51,7 +51,7 @@ def purge_zip_files(path: str):
     print("Arquivos \".zip\" excluídos com sucesso.")
 
 
-def get_all_files(path: str = "dados_cnpj/2025-11") -> List[str]:
+def get_all_files(path: str = "./dados_cnpj/2025-11") -> List[str]:
     try:
         return (os.listdir(path))
     except Exception as e:

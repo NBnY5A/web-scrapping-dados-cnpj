@@ -1,10 +1,10 @@
 import { LayoutDashboard, PieChart, Settings, LogOut, Search } from 'lucide-react';
 
-const Sidebar = () => {
+const Sidebar = ({ currentPage, onNavigate }) => {
   const menuItems = [
-    { icon: LayoutDashboard, label: "Dashboard", active: true },
-    { icon: Search, label: "Pesquisar CNPJ", active: false },
-    { icon: Settings, label: "Configurações", active: false },
+    { icon: LayoutDashboard, label: "Dashboard", page: "dashboard" },
+    { icon: Search, label: "Pesquisar CNPJ", page: "pesquisar" },
+    { icon: Settings, label: "Configurações", page: "configuracoes" },
   ];
 
   return (
@@ -18,8 +18,9 @@ const Sidebar = () => {
         {menuItems.map((item, idx) => (
           <button
             key={idx}
+            onClick={() => onNavigate && onNavigate(item.page)}
             className={`flex items-center w-full px-4 py-3 rounded-lg transition-colors ${
-              item.active 
+              currentPage === item.page
                 ? 'bg-blue-600 text-white shadow-md shadow-blue-900/20' 
                 : 'text-gray-400 hover:bg-gray-800 hover:text-white'
             }`}

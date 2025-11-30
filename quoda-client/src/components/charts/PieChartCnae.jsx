@@ -22,7 +22,6 @@ const PieChartCnae = ({ data }) => {
           ))}
         </Pie>
         <Tooltip contentStyle={{ borderRadius: '8px', border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-        <Legend verticalAlign="bottom" height={36} iconType="circle" formatter={(value) => <span className="text-gray-600 text-sm ml-1">{value}</span>} />
       </PieChart>
     </ResponsiveContainer>
   );

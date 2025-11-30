@@ -31,11 +31,11 @@ def handle_load(files_names: list[str]):
         files = file_map.get(table_name, [])
 
         if not files:
-            print(f"Nenhum arquivo encontrado para a tabela {table_name}")
+            print(f"⚠️  Nenhum arquivo encontrado para a tabela {table_name}")
             continue
     
         for file_name in files:
-            file_path = "dados_cnpj/2025-11/" + file_name
+            file_path = "./dados_cnpj/2025-11/" + file_name
             if table_name == "Cnaes":
                 load_cnaes(file_path=file_path, engine=ENGINE)
 
@@ -57,6 +57,12 @@ def handle_load(files_names: list[str]):
 
 
 def load_paises(file_path, engine):
+    import os
+    
+    if not os.path.exists(file_path):
+        print(f"⚠️  Arquivo {file_path} não encontrado. Pulando carga de Países...")
+        return
+    
     column_names = ["id_pais", "nome"]
     total_loaded = 0
 
@@ -77,7 +83,7 @@ def load_paises(file_path, engine):
 
                 total_loaded += len(chunk)
             
-            print(f"Carga de Países concluída. Total de registros: {total_loaded}")
+            print(f"✅ Carga de Países concluída. Total de registros: {total_loaded}")
 
         except Exception as e:
             session.rollback()
@@ -87,10 +93,18 @@ def load_paises(file_path, engine):
 
 
 def load_cnaes(file_path, engine):
+    import os
+    
+    if not os.path.exists(file_path):
+        print(f"⚠️  Arquivo {file_path} não encontrado. Pulando carga de CNAEs...")
+        return
+        
     column_names = ["codigo_cnae", "descricao"]
     total_loaded = 0
+    LIMITE_TESTE = 100  # 🔥 APENAS 100 CNAEs PARA TESTE
 
-    print("Iniciando carga de dados do Cnaes...")
+    print(f"📥 Iniciando carga de dados do arquivo: {file_path}...")
+    print(f"⚠️  MODO TESTE: Carregando apenas {LIMITE_TESTE} registros")
 
     with Session(engine) as session:
         try:
@@ -106,8 +120,13 @@ def load_cnaes(file_path, engine):
                 session.commit()
                 
                 total_loaded += len(chunk)
+                
+                # 🔥 PARAR APÓS LIMITE DE TESTE
+                if total_loaded >= LIMITE_TESTE:
+                    print(f"⚠️  Limite de teste atingido ({LIMITE_TESTE} registros)")
+                    break
             
-            print(f"Carga de CNAEs concluída. Total de registros: {total_loaded}")
+            print(f"✅ Carga de CNAEs concluída. Total de registros: {total_loaded}")
 
         except Exception as e:
             session.rollback()
@@ -128,7 +147,9 @@ def load__empresas(file_path, engine):
     ]
 
     total_loaded = 0
-    print(f"Iniciando carga de dados de Empresas do arquivo: {file_path}...")
+    LIMITE_TESTE = 1000  # 🔥 APENAS 1000 EMPRESAS PARA TESTE
+    print(f"📥 Iniciando carga de dados de Empresas do arquivo: {file_path}...")
+    print(f"⚠️  MODO TESTE: Carregando apenas {LIMITE_TESTE} registros")
 
     with Session(engine) as session:
             try:
@@ -162,6 +183,11 @@ def load__empresas(file_path, engine):
                     chunk.to_sql(Empresas.__tablename__, session.bind, if_exists="append", index=False)
                     
                     total_loaded += len(chunk)
+                    
+                    # 🔥 PARAR APÓS LIMITE DE TESTE
+                    if total_loaded >= LIMITE_TESTE:
+                        print(f"⚠️  Limite de teste atingido ({LIMITE_TESTE} registros)")
+                        break
                 
                 session.commit()
                 print(f"✅ Carga de Empresas concluída. Total de registros: {total_loaded}")
