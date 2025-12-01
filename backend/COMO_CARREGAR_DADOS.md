@@ -11,14 +11,14 @@ docker ps
 Se não estiver rodando:
 
 ```bash
-cd /Users/marcosalbuquerque/Documents/web-scrapping-dados-cnpj/server
+cd web-scrapping-dados-cnpj/server
 docker-compose up -d
 ```
 
 ### 2️⃣ Crie as tabelas no banco de dados
 
 ```bash
-cd /Users/marcosalbuquerque/Documents/web-scrapping-dados-cnpj/server
+cd web-scrapping-dados-cnpj/server
 source venv/bin/activate
 PYTHONPATH=. python app/database/create_db.py
 ```
@@ -116,7 +116,7 @@ PYTHONPATH=. python app/database/create_db.py
 ## 🚀 Comando Único (tudo junto)
 
 ```bash
-cd /Users/marcosalbuquerque/Documents/web-scrapping-dados-cnpj/server && \
+cd web-scrapping-dados-cnpj/server && \
 source venv/bin/activate && \
 PYTHONPATH=. python app/database/create_db.py && \
 PYTHONPATH=. python app/database/load_data.py
