@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Dashboard from './pages/Dashboard';
 import PesquisarCNPJ from './pages/PesquisarCNPJ';
 
+
 function App() {
   const [currentPage, setCurrentPage] = useState('dashboard');
 
