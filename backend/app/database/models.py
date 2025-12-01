@@ -77,6 +77,11 @@ class Estabelecimentos(Base):
         back_populates="estabelecimentos_principais"
     )
 
+    cnaes_secundarios: Mapped[List["Cnae"]] = relationship(
+        secondary=estabelecimento_cnaes_secundarios,
+        back_populates="estabelecimentos_secundarios"
+    )
+
     pais: Mapped["Pais"] = relationship(back_populates="estabelecimentos")
     
 
@@ -108,7 +113,7 @@ class Cnae(Base):
     codigo_cnae: Mapped[str] = mapped_column(String(15), primary_key=True)
     descricao: Mapped[str] = mapped_column(String(255))
 
-    estabelecimentos_principais: Mapped[List["Estabelecimentos"]] = relationship(back_populates="cnae_principal")
+    estabelecimentos_principais: Mapped[List["Estabelecimentos"]] = relationship(back_populates="cnae_fiscal_principal")
     estabelecimentos_secundarios: Mapped[List["Estabelecimentos"]] = relationship(
         secondary=estabelecimento_cnaes_secundarios,
         back_populates="cnaes_secundarios"

@@ -1,9 +1,14 @@
+"""
+Script para download de dados CNPJ da Receita Federal.
+Faz download dos arquivos mais recentes da Receita Federal e extrai os ZIPs.
+"""
+
 import requests
 import os
 import re
-from scraper.downloader import download_files
-from utils.file_utils import extract_zip, purge_zip_files
-from scraper.parser import get_files_from_folder, get_folders
+from app.scraper.downloader import download_files
+from app.utils.file_utils import extract_zip, purge_zip_files
+from app.scraper.parser import get_files_from_folder, get_folders
 
 
 BASE_URL = "https://arquivos.receitafederal.gov.br/dados/cnpj/dados_abertos_cnpj/"
@@ -23,11 +28,8 @@ def main():
     resp = requests.get(BASE_URL + last_folder)
     
     patterns = [
-        re.compile(r"^Cnaes.*\.zip$"),
-        re.compile(r"^Empresas.*\.zip$"),
-        # re.compile(r"^Estabelecimentos.*\.zip$"),
-        # re.compile(r"^Socios.*\.zip$"),
-        # re.compile(r"^Pais.*\.zip$")
+        re.compile(r"^Socios\d*\.zip$"),  # Socios0.zip até Socios9.zip
+        re.compile(r"^Paises\.zip$")       # Apenas Paises.zip
     ]
     
     files = get_files_from_folder(resp.text, patterns)
