@@ -18,6 +18,18 @@ cd server
 docker-compose up -d
 ```
 
+# Objetivo do Projeto
+
+O projeto é uma solução completa para a ingestão, processamento, e visualização de dados governamentais abertos sobre empresas brasileiras (CNPJ), focando em criar um dashboard analítico para o usuário final. A aplicação adota uma arquitetura de microsserviços básica com três componentes distintos e um banco de dados.
+
+# Explicações do Projeto
+
+> A aplicação se divide em 3 serviços principais: **`api-server`**, **`backend`** e **`quoda-client`**. O serviço de **`api-server`** fornece uma API intermediária para se comunicar com o front-end e banco de dados, o front-end é o serviço nomeado como **`quoda-client`**. Já o serviço de **`backend`** é onde está contida toda a regra de negócio para a extração e inserção com o banco de dados.
+
+> Cada serviço tem um **`README.md`** com instruções para executá-los e operá-los de formas independentes. O fluxo da aplicação funciona da seguinte forma:
+> `**backend**` baixa os dados, converte em csv e extraí as informações desses csv's e as armazenam no banco de dados, o **`api-server`** consume os dados inseridos no banco de dados e os expoẽm através dos endpoints, o **`quoda-client`** consome os dados fornecidos pelo **`api-server`** e os mostram para o usuário.
+
+
 ## 1. Iniciar a API (Backend)
 
 Abra um terminal e execute:
